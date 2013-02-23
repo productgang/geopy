@@ -68,7 +68,10 @@ class Bing(Geocoder):
             if latitude and longitude:
                 latitude = float(latitude)
                 longitude = float(longitude)
-            return (a.get('locality', parse_resource(resource)).strip(stripchars), (latitude, longitude))
+            if a.get('locality'):
+                return (a.get('locality', '').strip(stripchars), (latitude, longitude))
+            else:
+                return parse_resource(resource)
 
         def parse_resource(resource):
             stripchars = ", \n"
